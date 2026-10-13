@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>全新产业项目 · 预约看房</title>
+<meta name="description" content="全新产业项目首发预览。30 秒了解它适不适合你，预约 1 对 1 看房。">
+<meta property="og:title" content="全新产业项目 · 预约看房">
+<meta property="og:description" content="先算一算，再决定。30 秒了解它适不适合你。">
+<meta property="og:image" content="assets/project.webp">
+<meta name="theme-color" content="#0b0c0f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+
+<script>
+/* =====================================================================
+   ★ 所有内容都在这里改 ★
+   改完保存、重新上传同一个 index.html，顾客手上的 link 就会自动更新。
+   带【 】的是还没填的资料 —— 上线前请全部换成真实内容。
+   ===================================================================== */
+const CONFIG = {
+  projectName: "【项目名称】",
+  tagline: "【一句话卖点，例如：xx 核心地段 · 永久地契 · 2029 年交屋】",
+  developer: "【发展商名称】",
+  image: "assets/project.webp",
+  currency: "RM",
+
+  // WhatsApp 号码：国家码 + 号码，不要加 + 或空格。例：60123456789
+  // 留空的话，顾客点预约会打开 WhatsApp 让他自己选联络人。
+  whatsapp: "",
+  agentName: "【你的名字】",
+  agentTitle: "【职称 / REN 号码】",
+
+  // 揭晓区的四个数字
+  stats: [
+    { value: "【RM xxx k】", label: "起价" },
+    { value: "【xxx】",      label: "sqft 起" },
+    { value: "【xx 分钟】",  label: "到【地标】" },
+    { value: "【20xx】",     label: "预计交屋" },
+  ],
+
+  // 六大亮点
+  highlights: [
+    { title: "屋顶休闲平台", text: "园景花园、凉亭与运动场都搬上了屋顶 —— 工作与生活之间，只隔一部电梯。" },
+    { title: "【地点优势】", text: "【填写：靠近哪条大道 / 哪个地标 / 几分钟到哪里】" },
+    { title: "【格局设计】", text: "【填写：单位尺寸、楼底高度、实用率等】" },
+    { title: "【配套设施】", text: "【填写：停车位、保安系统、货梯 / 电梯等】" },
+    { title: "【地契与产权】", text: "【填写：永久 / 租赁地契、分层地契等】" },
+    { title: "【发展商信誉】", text: "【填写：过往完成的项目、得奖记录】" },
+  ],
+
+  // 首发优惠（请只填真实优惠）
+  offer: {
+    title: "首发预览专属配套",
+    perks: [
+      "【优惠 1，例如：早鸟折扣 x%】",
+      "【优惠 2，例如：免律师费与印花税】",
+      "【优惠 3，例如：低订金 RM x 即可锁定单位】",
+    ],
+    // 真实截止日期，格式 "2026-11-30T23:59:59+08:00"。留空 = 不显示倒数。
+    deadline: "",
+    // 真实剩余单位数。留空 = 不显示。
+    unitsLeft: "",
+  },
+
+  // 计算器的贷款假设（仅供估算）
+  loan: { ratePct: 4.2, years: 30 },
+
+  timeSlots: ["上午 10:00 – 12:00", "下午 2:00 – 4:00", "傍晚 5:00 – 7:00"],
+
+  faqs: [
+    { q: "看房需要付费或先下订吗？", a: "完全不需要。看房是免费的，没有任何义务，你只需要带着问题来。" },
+    { q: "我还不确定预算够不够，可以来吗？", a: "可以。现场会帮你做一次贷款资格估算，让你清楚知道自己的范围，再决定要不要继续。" },
+    { q: "看房大概要多久？", a: "一般 30 到 45 分钟：看模型与单位图、了解价格表、解答你的问题。" },
+    { q: "【常见问题 4】", a: "【填写答案】" },
+  ],
+
+  disclaimer: "页面图像为艺术家构想图，仅供参考。所有资料以发展商最终公布及买卖合约为准。计算结果仅为估算，不构成任何财务建议。",
+};
+</script>
+
+<style>
+:root{
+  --bg:#0b0c0f; --bg2:#121419; --card:#171a20; --line:rgba(255,255,255,.09);
+  --ink:#f4f1ea; --muted:#9d9a92; --gold:#c9a35c; --gold2:#e6c98a;
+  --cream:#f5f0e6; --cream-ink:#17150f; --cream-muted:#6d675a;
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Inter",-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --r:20px; --pad:clamp(20px,5vw,48px);
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+img{max-width:100%;display:block}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
+section{padding:clamp(72px,12vw,140px) 0;position:relative}
+h1,h2,h3{font-family:var(--serif);font-weight:900;line-height:1.2;letter-spacing:.01em;text-wrap:balance}
+h2{font-size:clamp(30px,5.4vw,54px)}
+.gold{color:var(--gold2)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:22px}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--gold)}
+.lead{font-size:clamp(16px,2.1vw,19px);color:var(--muted);max-width:620px;margin-top:20px}
+
+/* progress + nav */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;z-index:60}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,backdrop-filter .3s,border-color .3s;border-bottom:1px solid transparent}
+nav.solid{background:rgba(11,12,15,.72);backdrop-filter:saturate(160%) blur(18px);-webkit-backdrop-filter:saturate(160%) blur(18px);border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55vw}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:999px;font-weight:600;font-size:16px;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1408;box-shadow:0 10px 34px -10px rgba(201,163,92,.65)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 40px -10px rgba(201,163,92,.8)}
+.btn-ghost{border:1px solid rgba(255,255,255,.22);color:var(--ink)}
+.btn-ghost:hover{background:rgba(255,255,255,.07)}
+.btn-sm{padding:10px 20px;font-size:14px}
+.btn .arr{transition:transform .2s}.btn:hover .arr{transform:translateX(4px)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:center;padding:120px 0 90px;overflow:hidden}
+.hero-bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(16px) brightness(.42) saturate(1.1);transform:scale(1.08)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,transparent 0,rgba(11,12,15,.55) 60%,var(--bg) 100%),linear-gradient(180deg,rgba(11,12,15,.5),transparent 30%,var(--bg) 96%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(40px,8.4vw,92px);max-width:900px}
+.hero h1 .gold{display:inline-block}
+.hero .lead{color:#cfcbc2;font-size:clamp(17px,2.3vw,21px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:34px;font-size:14px;color:#b8b4aa}
+.trust span::before{content:"✓";color:var(--gold2);margin-right:8px}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-size:11px;letter-spacing:.3em;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll-hint i{width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* calculator (cream) */
+.cream{background:var(--cream);color:var(--cream-ink)}
+.cream .eyebrow{color:#8a6a2c}.cream .eyebrow::before{background:#8a6a2c}
+.cream .lead{color:var(--cream-muted)}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);margin-top:52px;align-items:stretch}
+.calc-in{display:flex;flex-direction:column;gap:34px;justify-content:center}
+.field label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--cream-muted);margin-bottom:14px}
+.field label b{font-family:var(--serif);font-size:26px;color:var(--cream-ink)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:#d9d0bd;outline-offset:8px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--cream-ink);border:4px solid var(--cream);box-shadow:0 2px 10px rgba(0,0,0,.3);cursor:grab}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cream-ink);border:4px solid var(--cream);cursor:grab}
+.calc-out{background:var(--cream-ink);color:var(--ink);border-radius:var(--r);padding:clamp(26px,4vw,44px);display:flex;flex-direction:column;gap:22px}
+.calc-out small{font-size:13px;color:var(--muted);display:block}
+.big{font-family:var(--serif);font-weight:900;font-size:clamp(38px,6.4vw,62px);line-height:1.1;font-variant-numeric:tabular-nums}
+.calc-out hr{border:0;border-top:1px solid var(--line)}
+.zero{color:#e98a7a}
+.note{font-size:12px;color:var(--muted)}
+
+/* quiz */
+.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,5vw,56px);margin-top:48px;max-width:760px}
+.dots{display:flex;gap:8px;margin-bottom:30px}
+.dots i{height:3px;flex:1;border-radius:3px;background:rgba(255,255,255,.12);transition:background .3s}
+.dots i.on{background:var(--gold)}
+.q-step{font-size:13px;color:var(--muted);letter-spacing:.14em}
+.q-title{font-size:clamp(22px,3.6vw,32px);margin:10px 0 26px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{text-align:left;padding:18px 20px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:16px;transition:border-color .2s,background .2s,transform .2s}
+.opt:hover{border-color:var(--gold);background:rgba(201,163,92,.09);transform:translateY(-2px)}
+.q-pane{animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.result h3{font-size:clamp(24px,4vw,36px);margin-bottom:16px}
+.result ul{list-style:none;padding:0;margin:22px 0 30px;display:grid;gap:12px}
+.result li{padding-left:28px;position:relative;color:#d6d2c8}
+.result li::before{content:"";position:absolute;left:0;top:.72em;width:14px;height:1px;background:var(--gold)}
+.redo{margin-left:6px;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+
+/* reveal */
+.reveal-grid{display:grid;grid-template-columns:minmax(0,560px) 1fr;gap:clamp(28px,5vw,64px);align-items:center;margin-top:20px}
+.frame{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 90px -30px rgba(0,0,0,.9)}
+.frame img{width:100%;aspect-ratio:1;object-fit:cover;filter:blur(22px) brightness(.6);transform:scale(1.12);transition:filter 1.6s ease,transform 1.6s ease}
+.frame.in img{filter:none;transform:none}
+.frame figcaption{position:absolute;left:14px;top:14px;font-size:11px;letter-spacing:.14em;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);color:#ddd}
+.reveal-grid h2{font-size:clamp(32px,5vw,56px)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:34px}
+.stat{background:var(--bg);padding:22px 20px}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);color:var(--gold2);line-height:1.3}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* highlights */
+.alt{background:var(--bg2)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+.hl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;transition:transform .3s,border-color .3s}
+.hl:hover{transform:translateY(-6px);border-color:rgba(201,163,92,.5)}
+.hl .n{font-family:var(--serif);font-size:14px;color:var(--gold);letter-spacing:.1em}
+.hl h3{font-size:21px;margin:14px 0 10px}
+.hl p{font-size:15px;color:var(--muted)}
+
+/* why visit */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border-top:1px solid var(--line)}
+.why div{padding:34px 28px 10px 0;border-right:1px solid var(--line)}
+.why div+div{padding-left:28px}.why div:last-child{border-right:0}
+.why b{font-family:var(--serif);font-size:44px;color:var(--gold2);line-height:1;display:block;margin-bottom:16px}
+.why h3{font-size:20px;margin-bottom:8px}
+.why p{font-size:15px;color:var(--muted)}
+
+/* offer */
+.offer-box{border:1px solid rgba(201,163,92,.45);border-radius:28px;padding:clamp(28px,5vw,60px);background:radial-gradient(ellipse at top right,rgba(201,163,92,.16),transparent 60%),var(--card);display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.perks{list-style:none;padding:0;margin-top:26px;display:grid;gap:14px}
+.perks li{display:flex;gap:14px;font-size:17px}
+.perks li::before{content:"◆";color:var(--gold);font-size:11px;margin-top:.6em}
+.urgency{text-align:center}
+.count{display:flex;justify-content:center;gap:10px;margin:14px 0 6px}
+.count div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 0;width:72px}
+.count b{display:block;font-family:var(--serif);font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.count span{font-size:11px;color:var(--muted);letter-spacing:.14em}
+.units{margin-top:18px;font-size:15px;color:#d6d2c8}
+.units b{color:var(--gold2);font-family:var(--serif);font-size:22px;margin:0 4px}
+
+/* booking */
+.book{display:grid;grid-template-columns:1fr minmax(0,520px);gap:clamp(28px,5vw,72px);align-items:start}
+.agent{display:flex;align-items:center;gap:16px;margin-top:34px;padding-top:28px;border-top:1px solid var(--line)}
+.avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1a1408;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:22px;flex:none}
+.agent small{color:var(--muted);display:block}
+form{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:clamp(22px,4vw,40px);display:grid;gap:22px}
+.lbl{font-size:13px;color:var(--muted);letter-spacing:.08em;margin-bottom:10px;display:block}
+.txt{width:100%;padding:16px 18px;border-radius:14px;border:1px solid var(--line);background:var(--bg);font-size:16px;outline:none;transition:border-color .2s}
+.txt:focus{border-color:var(--gold)}
+.chips{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips.wrapc{flex-wrap:wrap;overflow:visible}
+.chip{flex:none;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--bg);font-size:14px;text-align:center;line-height:1.35;transition:all .2s}
+.chip b{display:block;font-size:17px}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#1a1408}
+form .btn{width:100%}
+.err{color:#e98a7a;font-size:14px;min-height:1em}
+
+/* faq */
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;font-size:18px;font-weight:600}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:24px;line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin-top:12px;max-width:680px}
+
+footer{padding:48px 0 120px;border-top:1px solid var(--line);font-size:12px;color:#6f6c66}
+footer b{color:var(--muted);font-family:var(--serif);font-size:15px;display:block;margin-bottom:10px}
+
+/* sticky bar (mobile) */
+.sticky{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:55;display:none;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 20px;border-radius:999px;background:rgba(23,26,32,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 20px 50px -12px rgba(0,0,0,.8);transform:translateY(140%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.sticky.show{transform:none}
+.sticky span{font-size:13px;color:#d6d2c8;line-height:1.3}
+
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+.todo{color:#e9b872}
+
+@media (max-width:860px){
+  .calc,.reveal-grid,.offer-box,.book{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr 1fr}
+  .why{grid-template-columns:1fr}
+  .why div,.why div+div{padding:28px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .sticky{display:flex}
+  nav .btn{display:none}
+}
+@media (max-width:540px){
+  .opts,.cards{grid-template-columns:1fr}
+  .cta-row .btn{width:100%}
+  .count div{width:64px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}.frame img{filter:none;transform:none}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav id="nav"><div class="wrap">
+  <div class="brand" data-t="projectName"></div>
+  <a class="btn btn-gold btn-sm" href="#book">预约看房</a>
+</div></nav>
+
+<!-- 1 · HOOK：先抛问题，不介绍项目 -->
+<header class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="wrap">
+    <div class="eyebrow">全新项目 · 首发预览</div>
+    <h1>租了这么多年，<br>你帮房东<span class="gold">还清了多少贷款？</span></h1>
+    <p class="lead">先别急着看项目。花 30 秒算一笔账 —— 算完，你会用完全不同的眼光看接下来的内容。</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="#calc">开始算一算 <span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="#book">我已经准备好，直接预约</a>
+    </div>
+    <div class="trust"><span>免费看房</span><span>没有任何义务</span><span>1 对 1 讲解</span></div>
+  </div>
+  <div class="scroll-hint">SCROLL<i></i></div>
+</header>
+
+<!-- 2 · PROBLEM：让顾客自己算出痛点 -->
+<section class="cream" id="calc">
+  <div class="wrap">
+    <div class="eyebrow rv">01 — 算一算</div>
+    <h2 class="rv">每个月的租金，<br>最后去了哪里？</h2>
+    <p class="lead rv">拉动下面的数字，换成你自己的情况。</p>
+    <div class="calc rv">
+      <div class="calc-in">
+        <div class="field">
+          <label>每月租金 <b id="rentV"></b></label>
+          <input type="range" id="rent" min="500" max="15000" step="100" value="2500" aria-label="每月租金">
+        </div>
+        <div class="field">
+          <label>租用年数 <b id="yrsV"></b></label>
+          <input type="range" id="yrs" min="1" max="25" step="1" value="10" aria-label="租用年数">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div><small>你付出的租金总额</small><div class="big" id="total"></div></div>
+        <hr>
+        <div><small>换来的产权</small><div class="big zero">0%</div></div>
+        <hr>
+        <div><small>同样的月付，如果拿来供贷款，大约可以支撑</small><div class="big gold" id="loan"></div>
+        <p class="note" id="loanNote"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · QUALIFY：小测验，建立投入感 -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="eyebrow rv">02 — 30 秒测试</div>
+    <h2 class="rv">不是每个人都适合。<br><span class="gold">你呢？</span></h2>
+    <p class="lead rv">回答 3 个问题，看看这个项目跟你的计划对不对得上。</p>
+    <div class="quiz-card rv" id="quizCard"></div>
+  </div>
+</section>
+
+<!-- 4 · REVEAL：这时候才揭晓项目 -->
+<section class="alt" id="reveal">
+  <div class="wrap">
+    <div class="reveal-grid">
+      <figure class="frame" id="frame">
+        <img id="projImg" alt="项目艺术家构想图" loading="lazy">
+        <figcaption>ARTIST'S IMPRESSION</figcaption>
+      </figure>
+      <div>
+        <div class="eyebrow rv">03 — 揭晓</div>
+        <h2 class="rv" data-t="projectName"></h2>
+        <p class="lead rv" data-t="tagline"></p>
+        <div class="stats rv" id="stats"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · DESIRE：亮点 -->
+<section id="highlights">
+  <div class="wrap">
+    <div class="eyebrow rv">04 — 为什么是它</div>
+    <h2 class="rv">六个理由，<br>让它值得你走一趟。</h2>
+    <div class="cards" id="cards"></div>
+  </div>
+</section>
+
+<!-- 6 · 为什么要亲自来 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="eyebrow rv">05 — 现场才有的</div>
+    <h2 class="rv">有三样东西，<br><span class="gold">网上看不到。</span></h2>
+    <div class="why">
+      <div class="rv"><b>壹</b><h3>完整价格表</h3><p>每一层、每一个单位的实际售价与配套，只在现场公开。</p></div>
+      <div class="rv"><b>贰</b><h3>优先选位</h3><p>楼层、朝向、角落单位 —— 先到的人先选，好位置不等人。</p></div>
+      <div class="rv"><b>叁</b><h3>你的专属数字</h3><p>现场帮你估算贷款资格与月供，带着清楚的答案回家。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · OFFER + URGENCY -->
+<section id="offer">
+  <div class="wrap">
+    <div class="offer-box rv">
+      <div>
+        <div class="eyebrow">06 — 首发配套</div>
+        <h2 id="offerTitle"></h2>
+        <ul class="perks" id="perks"></ul>
+      </div>
+      <div class="urgency">
+        <div id="countWrap" hidden>
+          <small class="note">优惠截止倒数</small>
+          <div class="count" id="count"></div>
+        </div>
+        <p class="units" id="units" hidden></p>
+        <a class="btn btn-gold" href="#book" style="margin-top:26px">锁定我的看房时段 <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · ACTION：预约 -->
+<section class="alt" id="book">
+  <div class="wrap book">
+    <div>
+      <div class="eyebrow rv">07 — 预约看房</div>
+      <h2 class="rv">选一个时间，<br><span class="gold">剩下的交给我。</span></h2>
+      <p class="lead rv">填好后会直接打开 WhatsApp，把你的预约发给我。我会亲自回复确认。</p>
+      <div class="agent rv">
+        <div class="avatar" id="avatar"></div>
+        <div><b data-t="agentName"></b><small data-t="agentTitle"></small></div>
+      </div>
+    </div>
+    <form id="form" class="rv" novalidate>
+      <div><label class="lbl" for="fName">你的名字</label><input class="txt" id="fName" autocomplete="name" placeholder="怎么称呼你？"></div>
+      <div><label class="lbl" for="fPhone">联络号码</label><input class="txt" id="fPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="例：012-345 6789"></div>
+      <div><span class="lbl">哪一天方便？</span><div class="chips" id="days"></div></div>
+      <div><span class="lbl">什么时段？</span><div class="chips wrapc" id="slots"></div></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn btn-gold" type="submit">用 WhatsApp 确认预约 <span class="arr">→</span></button>
+      <p class="note" style="text-align:center">免费 · 无义务 · 约 30–45 分钟</p>
+    </form>
+  </div>
+</section>
+
+<!-- 9 · 消除疑虑 -->
+<section id="faq">
+  <div class="wrap" style="max-width:820px">
+    <div class="eyebrow rv">还在犹豫？</div>
+    <h2 class="rv" style="margin-bottom:30px">常见问题</h2>
+    <div id="faqs"></div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <b data-t="projectName"></b>
+  <p><span data-t="developer"></span></p>
+  <p style="margin-top:10px" data-t="disclaimer"></p>
+</div></footer>
+
+<div class="sticky" id="sticky">
+  <span>免费 1 对 1 看房<br><small style="color:var(--muted)">拿完整价格表</small></span>
+  <a class="btn btn-gold btn-sm" href="#book">立即预约</a>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// 未填写的【 】内容标成橙色，方便上线前检查
+const mark = s => esc(s).replace(/【[^】]*】/g, m => `<span class="todo">${m}</span>`);
+const money = n => CONFIG.currency + ' ' + Math.round(n).toLocaleString('en-US');
+
+/* ---------- 填入 CONFIG ---------- */
+document.querySelectorAll('[data-t]').forEach(el => el.innerHTML = mark(CONFIG[el.dataset.t] ?? ''));
+if (!/【/.test(CONFIG.projectName)) document.title = CONFIG.projectName + ' · 预约看房';
+$('#heroBg').style.backgroundImage = `url("${CONFIG.image}")`;
+$('#projImg').src = CONFIG.image;
+$('#avatar').textContent = (CONFIG.agentName.replace(/[【】]/g, '')[0] || '我');
+$('#stats').innerHTML = CONFIG.stats.map(s => `<div class="stat"><b>${mark(s.value)}</b><span>${mark(s.label)}</span></div>`).join('');
+$('#cards').innerHTML = CONFIG.highlights.map((h, i) =>
+  `<article class="hl rv"><div class="n">0${i + 1}</div><h3>${mark(h.title)}</h3><p>${mark(h.text)}</p></article>`).join('');
+$('#offerTitle').innerHTML = mark(CONFIG.offer.title);
+$('#perks').innerHTML = CONFIG.offer.perks.map(p => `<li>${mark(p)}</li>`).join('');
+$('#faqs').innerHTML = CONFIG.faqs.map(f => `<details><summary>${mark(f.q)}</summary><p>${mark(f.a)}</p></details>`).join('');
+if (CONFIG.offer.unitsLeft !== '' && CONFIG.offer.unitsLeft != null) {
+  $('#units').hidden = false;
+  $('#units').innerHTML = `目前仅剩<b>${esc(CONFIG.offer.unitsLeft)}</b>个单位`;
+}
+
+/* ---------- 计算器 ---------- */
+function calc() {
+  const rent = +$('#rent').value, yrs = +$('#yrs').value;
+  $('#rentV').textContent = money(rent);
+  $('#yrsV').textContent = yrs + ' 年';
+  $('#total').textContent = money(rent * 12 * yrs);
+  const r = CONFIG.loan.ratePct / 100 / 12, n = CONFIG.loan.years * 12;
+  $('#loan').textContent = money(rent * (1 - Math.pow(1 + r, -n)) / r);
+  $('#loanNote').textContent = `按年利率 ${CONFIG.loan.ratePct}%、${CONFIG.loan.years} 年期估算，仅供参考，实际以银行批准为准。`;
+}
+$('#rent').addEventListener('input', calc);
+$('#yrs').addEventListener('input', calc);
+calc();
+
+/* ---------- 小测验 ---------- */
+const QUIZ = [
+  { key: '目的', q: '你买产业，主要是为了什么？', opts: ['自己用', '投资收租', '自用 + 投资', '还在观望'] },
+  { key: '月供预算', q: '你觉得舒服的月供范围是？', opts: [`${CONFIG.currency} 2,000 以下`, `${CONFIG.currency} 2,000 – 4,000`, `${CONFIG.currency} 4,000 – 6,000`, `${CONFIG.currency} 6,000 以上`] },
+  { key: '时间', q: '你打算什么时候出手？', opts: ['3 个月内', '半年内', '一年内', '先了解看看'] },
+];
+const RESULT = {
+  0: ['你要找的是一个长期的落脚点。', ['现场重点帮你看：格局、动线、实际可用空间', '对比你现在的租金，算出真实的月供差距', '挑出最适合自用的楼层与朝向']],
+  1: ['你看的是数字，那就让数字说话。', ['现场重点帮你看：入场价、租金行情与回酬估算', '哪些单位类型最容易出租', '首发配套能帮你省下多少前期成本']],
+  2: ['进可攻、退可守 —— 你要的是弹性。', ['现场重点帮你看：自用与出租都吃香的单位类型', '月供与预期租金的对比', '未来转手时的优势在哪里']],
+  3: ['观望没有错，但要带着数字观望。', ['不需要做任何决定，先把价格表拿到手', '现场帮你估算贷款资格，知道自己的范围', '有了数字，等或不等都是清楚的选择']],
+};
+let step = 0; const answers = {};
+function renderQuiz() {
+  const card = $('#quizCard');
+  const dots = `<div class="dots">${QUIZ.map((_, i) => `<i class="${i <= step ? 'on' : ''}"></i>`).join('')}</div>`;
+  if (step < QUIZ.length) {
+    const s = QUIZ[step];
+    card.innerHTML = dots + `<div class="q-pane"><div class="q-step">问题 ${step + 1} / ${QUIZ.length}</div>
+      <h3 class="q-title">${esc(s.q)}</h3>
+      <div class="opts">${s.opts.map((o, i) => `<button type="button" class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div></div>`;
+    card.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      answers[s.key] = s.opts[+b.dataset.i];
+      if (step === 0) answers._purpose = +b.dataset.i;
+      step++; renderQuiz();
+    });
+  } else {
+    const [title, pts] = RESULT[answers._purpose ?? 3];
+    card.innerHTML = `<div class="dots">${QUIZ.map(() => '<i class="on"></i>').join('')}</div>
+      <div class="q-pane result"><div class="q-step">你的结果</div>
+      <h3>${title}</h3>
+      <p style="color:var(--muted)">根据你的回答，看房时我会为你准备：</p>
+      <ul>${pts.map(p => `<li>${p}</li>`).join('')}</ul>
+      <a class="btn btn-gold" href="#reveal">看看是哪个项目 <span class="arr">→</span></a>
+      <button type="button" class="redo" id="redo">重新作答</button></div>`;
+    $('#redo').onclick = () => { step = 0; renderQuiz(); };
+  }
+}
+renderQuiz();
+
+/* ---------- 倒数（只在填了真实截止日期时显示） ---------- */
+if (CONFIG.offer.deadline) {
+  const end = new Date(CONFIG.offer.deadline).getTime();
+  const tick = () => {
+    const d = end - Date.now();
+    if (isNaN(end) || d <= 0) { $('#countWrap').hidden = true; return; }
+    $('#countWrap').hidden = false;
+    const parts = [[Math.floor(d / 864e5), '天'], [Math.floor(d / 36e5) % 24, '时'], [Math.floor(d / 6e4) % 60, '分'], [Math.floor(d / 1e3) % 60, '秒']];
+    $('#count').innerHTML = parts.map(([v, l]) => `<div><b>${String(v).padStart(2, '0')}</b><span>${l}</span></div>`).join('');
+    setTimeout(tick, 1000);
+  };
+  tick();
+}
+
+/* ---------- 预约表单 ---------- */
+const WD = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+let pickDay = '', pickSlot = '';
+$('#days').innerHTML = Array.from({ length: 10 }, (_, i) => {
+  const d = new Date(); d.setDate(d.getDate() + i + 1);
+  const label = `${d.getMonth() + 1}月${d.getDate()}日 ${WD[d.getDay()]}`;
+  return `<button type="button" class="chip" data-v="${label}">${WD[d.getDay()]}<b>${d.getDate()}</b>${d.getMonth() + 1}月</button>`;
+}).join('');
+$('#slots').innerHTML = CONFIG.timeSlots.map(s => `<button type="button" class="chip" data-v="${esc(s)}">${esc(s)}</button>`).join('');
+function chipGroup(id, set) {
+  $(id).addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    $(id).querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b));
+    set(b.dataset.v);
+  });
+}
+chipGroup('#days', v => pickDay = v);
+chipGroup('#slots', v => pickSlot = v);
+
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = $('#fName').value.trim(), phone = $('#fPhone').value.trim();
+  const miss = !name ? '请填写你的名字' : !/\d{7,}/.test(phone.replace(/\D/g, '')) ? '请填写有效的联络号码' : !pickDay ? '请选择一个日期' : !pickSlot ? '请选择一个时段' : '';
+  $('#err').textContent = miss;
+  if (miss) return;
+  const lines = [
+    `你好，我想预约 ${CONFIG.projectName} 看房。`, '',
+    `姓名：${name}`, `电话：${phone}`, `日期：${pickDay}`, `时段：${pickSlot}`,
+    ...QUIZ.filter(q => answers[q.key]).map(q => `${q.key}：${answers[q.key]}`),
+  ];
+  window.open(`https://wa.me/${CONFIG.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+});
+
+/* ---------- 滚动效果 ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+document.querySelectorAll('.rv, #frame').forEach(el => io.observe(el));
+let bookVisible = false;
+new IntersectionObserver(es => { bookVisible = es[0].isIntersecting; onScroll(); }, { threshold: .1 }).observe($('#book'));
+function onScroll() {
+  const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+  $('#progress').style.width = (max > 0 ? y / max * 100 : 0) + '%';
+  $('#nav').classList.toggle('solid', y > 40);
+  $('#sticky').classList.toggle('show', y > innerHeight * .7 && !bookVisible);
+}
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+</script>
+</body>
+</html>
